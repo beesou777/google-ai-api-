@@ -1,9 +1,13 @@
 const express = require('express');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 require('dotenv').config();
+const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Middleware to enable CORS
+app.use(cors());
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
