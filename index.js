@@ -9,13 +9,10 @@ const port = process.env.PORT || 3000;
 
 const converter = new showdown.Converter();
 
-// Middleware to enable CORS
 app.use(cors());
 
-// Middleware to parse JSON request bodies
 app.use(express.json());
 
-// Initialize Google Generative AI
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
@@ -28,7 +25,6 @@ function createContext(chatHistory) {
   return recentHistory.map(item => `User: ${item.prompt}\nAssistant: ${item.response}`).join('\n');
 }
 
-// API endpoint to generate content
 app.post('/generate-content', async (req, res) => {
   const { prompt } = req.body;
 
@@ -61,7 +57,6 @@ app.post('/generate-content', async (req, res) => {
   }
 });
 
-// Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
