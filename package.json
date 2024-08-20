@@ -12,6 +12,8 @@
     "@google/generative-ai": "^0.17.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "nodemon": "^3.1.4",
+    "showdown": "^2.1.0"
   }
 }

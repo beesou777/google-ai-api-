@@ -2,9 +2,13 @@ const express = require('express');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 require('dotenv').config();
 const cors = require('cors');
+const showdown = require('showdown');
+
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+const converter = new showdown.Converter()
 
 // Middleware to enable CORS
 app.use(cors());
@@ -28,13 +32,16 @@ app.post('/generate-content', async (req, res) => {
     const result = await model.generateContent([prompt]);
 
     if (result && result.response && result.response.text) {
-      res.json({ text: result.response.text() });
+      let markdownContent = result.response.text();
+      res.json({ html: converter.makeHtml(markdownContent) });
     } else {
       res.status(500).json({ error: 'Unexpected result structure' });
     }
+
   } catch (error) {
     res.status(500).json({ error: 'Error generating content', details: error.message });
   }
+
 });
 
 // Start the server
